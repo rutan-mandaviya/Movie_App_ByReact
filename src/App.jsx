@@ -1,48 +1,61 @@
-import React from 'react'
-import { Route, Routes } from 'react-router-dom'
-import Home from './Components/Home'
-import Loading from './Components/Loading'
-import Trending from './Components/Trending'
-import Popular from './Components/Popular'
-import Movie from './Components/Movie'
-import Tvshows from './Components/Tvshows'
-import People from './Components/People'
-import Moviedetails from './Components/Moviedetails'
-import Tvdetails from './Components/Tvdetails'
-import Persondetails from './Components/Persondetails'
-import Trailer from './Components/partials/Trailer'
-import Notfound from './Components/Notfound'
+import React, { useEffect, useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
+
+import Home from './Components/Home';
+import Loading from './Components/Loading';
+import Trending from './Components/Trending';
+import Popular from './Components/Popular';
+import Movie from './Components/Movie';
+import Tvshows from './Components/Tvshows';
+import People from './Components/People';
+import Moviedetails from './Components/Moviedetails';
+import Tvdetails from './Components/Tvdetails';
+import Persondetails from './Components/Persondetails';
+import Trailer from './Components/partials/Trailer';
+import Notfound from './Components/Notfound';
+
+const MobileBlocker = () => {
+  return (
+    <div className="w-screen h-screen bg-black text-white flex flex-col justify-center items-center px-5 text-center">
+      <h1 className="text-3xl font-bold mb-4">Access Denied</h1>
+      <p className="text-lg text-gray-300">
+        This website is not accessible on mobile devices. <br /> Please use a desktop or laptop to continue.
+      </p>
+    </div>
+  );
+};
+
 const App = () => {
-  return (
-      <div className="w-screen h-screen bg-[#1F1E24] flex text-white">
+  const [isMobile, setIsMobile] = useState(false);
 
-    <Routes>
-      <Route path="/" element={<Home></Home>}></Route>
-      <Route path="/trending" element={<Trending></Trending>}></Route>
-      <Route path="/popular" element={<Popular></Popular>}></Route>
+  useEffect(() => {
+    if (window.innerWidth <= 768) {
+      setIsMobile(true);
+    }
+  }, []);
 
-      <Route path="/movie" element={<Movie></Movie>}>
-      </Route>
-        <Route path='/movie/details/:id' element={<Moviedetails/>}>
-        <Route path="/movie/details/:id/trailer" element={<Trailer></Trailer>}></Route>
-        </Route>
+  if (isMobile) return <MobileBlocker />;
 
+  return (
+    <div className="w-screen h-screen bg-[#1F1E24] flex text-white">
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/trending" element={<Trending />} />
+        <Route path="/popular" element={<Popular />} />
+        <Route path="/movie" element={<Movie />} />
+        <Route path="/movie/details/:id" element={<Moviedetails />}>
+          <Route path="/movie/details/:id/trailer" element={<Trailer />} />
+        </Route>
+        <Route path="/tvshows" element={<Tvshows />} />
+        <Route path="/tv/details/:id" element={<Tvdetails />}>
+          <Route path="/tv/details/:id/trailer" element={<Trailer />} />
+        </Route>
+        <Route path="/person" element={<People />} />
+        <Route path="/person/details/:id" element={<Persondetails />} />
+        <Route path="*" element={<Notfound />} />
+      </Routes>
+    </div>
+  );
+};
 
-      <Route path="/tvshows" element={<Tvshows></Tvshows>}></Route>
-        <Route path='/tv/details/:id' element={<Tvdetails/>}>
-                <Route path="/tv/details/:id/trailer" element={<Trailer></Trailer>}></Route>
-
-        </Route>
-
-      
-      <Route path="/person" element={<People></People>}></Route>
-      <Route path="*" element={<Notfound></Notfound>}></Route>
-      <Route path='/person/details/:id' element={<Persondetails/>}></Route>
-    </Routes>
-
-
-      </div>
-  )
-}
-
-export default App
+export default App;
