@@ -2,146 +2,111 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, Outlet, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { asyncloadperson } from '../store/actions/personaction'
-
+import { removeperson } from '../store/reducers/personSlice'
 import Loading from './Loading'
 import Horizontalcard from './partials/Horizontalcard'
-import { removeperson } from '../store/reducers/personSlice'
 import Dropdown from './partials/Dropdown'
 
-
 const Persondetails = () => {
+  const { id } = useParams()
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const { pathname } = useLocation()
+  const person = useSelector((state) => state.person.persondata)
+  const [category, setcategory] = useState(localStorage.getItem("persondetails") || "movie")
 
-  const {id}=useParams()
-      const dispatch=useDispatch()
-      const navigate=useNavigate()
-      const {pathname}=useLocation()
-      const person=useSelector((state)=>state.person.persondata)
-      const [category, setcategory] = useState(localStorage.getItem("persondetails")||"movie")
-  
+  const handleCategoryChange = (e) => {
+    const value = e.target.value
+    setcategory(value)
+    localStorage.setItem("persondetails", value)
+  }
 
-  const handleCategoryChange=(e)=>{
-    const value=e.target.value
-    setcategory(value)
-    localStorage.setItem("persondetails",value)
-  }
-  
-      useEffect(()=>{
-          dispatch(asyncloadperson(id))
-          return (()=>{
-              dispatch(removeperson())
-          })
-          
-      },[id])
-  
-  
-  return person ?(
-    <div className='w-screen px-10 py-5  overflow-y-auto'>
+  useEffect(() => {
+    dispatch(asyncloadperson(id))
+    return () => dispatch(removeperson())
+  }, [id])
 
-      {/* part-1  nav bar */}
-         <nav className='h-[10vh] w-full flex items-center gap-10 text-xl'>
-      
-                  <Link className='text-3xl'>
-                  
-                    <i onClick={()=>navigate(-1)} className="text-3xl mr-5 hover:text-[#6556cd] ri-arrow-left-line"></i>
-                   Person</Link>
-      
-                   {/* <a title='webpage' target='_blank' href={c.homepage}><i className="ri-external-link-line"></i></a>
-                   <a title='wekipidia' target='_blank' href={`https://www.wikidata.org/wiki/${person.externalid.wikidata_id}`}><i className="ri-earth-fill"></i></a>
-                   <a title='imdb' target='_blank' href={`https://www.imdb.com/title/${person.detail.imdb_id}/`}>IMDB</a> */}
-          </nav>
+  return person ? (
+    <div className="w-full min-h-screen px-4 md:px-10 py-5 bg-[#0e0e0e] text-white overflow-y-auto">
+      {/* Navbar */}
+      <nav className="flex items-center gap-4 text-lg mb-5">
+        <button onClick={() => navigate(-1)} className="flex items-center gap-2 hover:text-[#6556cd]">
+          <i className="ri-arrow-left-line text-2xl"></i>
+          Person
+        </button>
+      </nav>
 
+      <div className="flex flex-col lg:flex-row gap-6">
+        {/* Sidebar */}
+        <div className="lg:w-[25%] flex flex-col gap-4">
+          <img
+            src={`https://image.tmdb.org/t/p/original${person.detail.profile_path}`}
+            className="w-full h-auto rounded-xl object-cover shadow-lg"
+            alt="person"
+          />
 
+          <div className="flex gap-4 text-2xl mt-2">
+            <a target="_blank" title="Wikipedia" href={`https://www.wikidata.org/wiki/${person.externalid.wikidata_id}`}><i className="text-gray-400 ri-earth-fill"></i></a>
+            <a target="_blank" title="Facebook" href={`https://www.facebook.com/${person.externalid.facebook_id}`}><i className="text-blue-500 ri-facebook-circle-fill"></i></a>
+            <a target="_blank" title="Instagram" href={`https://www.instagram.com/${person.externalid.instagram_id}`}><i className="text-pink-500 ri-instagram-fill"></i></a>
+            <a target="_blank" title="Twitter/X" href={`https://www.twitter.com/${person.externalid.twitter_id}`}><i className="text-white ri-twitter-x-fill"></i></a>
+          </div>
 
-    <div className="w-full flex  gap-[5%] items-start ">
-      {/* part -2 left poster and details */}
+          <div className="text-sm mt-4 space-y-3">
+            <h2 className="text-xl text-zinc-300 font-semibold">Personal Info</h2>
 
-      <div className="w-[20%] ">
+            <div><span className="text-zinc-400">Known For:</span> <br /> {person.detail.known_for_department}</div>
+            <div><span className="text-zinc-400">Gender:</span> <br /> {person.detail.gender === 2 ? "Male" : "Female"}</div>
+            <div><span className="text-zinc-400">Birthday:</span> <br /> {person.detail.birthday}</div>
+            <div><span className="text-zinc-400">Death:</span> <br /> {person.detail.deathday || "Still alive"}</div>
+            <div><span className="text-zinc-400">Place of Birth:</span> <br /> {person.detail.place_of_birth}</div>
+            <div><span className="text-zinc-400">Also Known As:</span>
+              <p className="text-zinc-200 text-xs mt-1">{person.detail.also_known_as.join(", ")}</p>
+            </div>
+          </div>
+        </div>
 
-      <img className='w-full h-[50vh] object-cover rounded-2xl  shadow-[8px_17px_38px_2px_rgba(0,0,0,0.5)]' src={`https://image.tmdb.org/t/p/original${
-                person.detail.profile_path 
-            }`} alt="" />
+        {/* Main Info */}
+        <div className="flex-1 space-y-6 overflow-x-hidden">
+          <h1 className="text-4xl font-bold">{person.detail.name}</h1>
 
-      <hr className='mt-3 mb-2  text-zinc-400'/>
-      
+          <div>
+            <h2 className="text-xl text-zinc-300 font-semibold mb-2">Biography</h2>
+            <p className="text-zinc-400 text-justify">{person.detail.biography.slice(0, 1200) || "Biography not available."}</p>
+          </div>
 
-      {/* social media link */}
+          <div>
+            <h2 className="text-xl text-zinc-300 font-semibold mb-3">Known For</h2>
+            <Horizontalcard data={person.combined_credits.cast} />
+          </div>
 
-      <div className=" text-3xl flex gap-x-5 ">
+          <div className="flex justify-between items-center mt-8 ">
+          </div>
+<div className="w-[100%] flex items-center justify-between bg-zinc-800 px-5 py-4 mx-auto  rounded-md mb-5 mt-2">
+            <h2 className="text-3xl text-zinc-200 font-semibold">Acting</h2>
+            <Dropdown value={category} title="Category" options={["tv", "movie"]} func={handleCategoryChange} />
+
+</div>
  
-                   <a title='wekipidia' target='_blank' href={`https://www.wikidata.org/wiki/${person.externalid.wikidata_id}`}><i className="text-gray-500 ri-earth-fill"></i></a>
-                   <a title='facebooke' target='_blank' href={`https://www.facebook.com/${person.externalid.facebook_id}`}><i className="text-blue-500 ri-facebook-circle-fill"></i></a>
-                   <a title='instagram' target='_blank' href={`https://www.instagram.com/${person.externalid.instagram_id}`}><i className="text-[#fe008f] ri-instagram-fill"></i></a>      
-                   <a title='instagram' target='_blank' href={`https://www.twitter.com/${person.externalid.twitter_id}`}><i className="text-white ri-twitter-x-fill"></i></a>      
 
-      </div>
+          <div className="max-h-[60vh] overflow-y-auto bg-[#161616] rounded-lg shadow-md p-4 space-y-3 text-sm">
+            {person[category + "_credits"].cast.map((c, i) => (
+              <Link
+                key={i}
+                to={`/${category}/details/${c.id}`}
+                className="block hover:bg-[#252525] px-3 py-3 rounded-md transition"
+              >
+                <div className="font-semibold text-white truncate">🎬 {c.name || c.title || c.original_name || c.original_title}</div>
+                <div className="ml-3 text-zinc-400 truncate">🧑‍🎤 as {c.character || "Unknown"}</div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </div>
 
-      {/* peersonal details */}
-
-      <h1 className='text-xl text-zinc-400 my-2 font-semibold'>Personal info</h1>
-      <h1 className='text text-zinc-400 font-semibold leading-4 '>Known For </h1>
-      <h3 className='text-zinc-200 mb-2'>{person.detail.known_for_department}</h3>
-
-      <h1 className='text text-zinc-400 font-semibold leading-4 '>Gender </h1>
-      <h3 className='text-zinc-200 mb-2'>{person.detail.gender ===2 ? "male" :"female"}</h3>
-
-
-      <h1 className='text text-zinc-400 font-semibold leading-4 '>Birth-day </h1>
-      <h3 className='text-zinc-200 mb-2'>{person.detail.birthday}</h3>
-
-
-      <h1 className='text text-zinc-400 font-semibold leading-4 '>Death-day </h1>
-      <h3 className='text-zinc-200 mb-2'>{person.detail.deathday ?person.detail.deathday:"Still alive"}</h3>
-
-      <h1 className='text text-zinc-400 font-semibold leading-4 '>Place of birth </h1>
-      <h3 className='text-zinc-200 mb-2'>{person.detail.place_of_birth}</h3>
-
-      <h1 className='text text-zinc-400 font-semibold leading-4 '>Also known As </h1>
-      <h3 className='w-[15vw] text-zinc-200 mb-2'>{person.detail.also_known_as.join(", ")}</h3>
-
-
-
-
-
-
-      </div>
-
-
-      <div className="w-[80%] h-full ">
-         <h1 className='text-5xl text-zinc-100 my-2 font-semibold'>{person.detail.name}</h1>
-      <h1 className='text-xl text-zinc-200 font-semibold  '>Biography </h1>
-      <h3 className='text-zinc-400 mb-5'>{person.detail.biography.slice(0,1000)}</h3>
-            {/* <h1>Known for</h1> */}
-      <h1 className='text-xl text-zinc-200 font-semibold  mb-5'>Known for </h1>
-      <Horizontalcard data={person.combined_credits.cast}></Horizontalcard>
-
-      <div className="w-full flex justify-between mt-5">
-                  <h1 className='text-4xl text-zinc-200 font-semibold  '>Acting </h1>
-            <Dropdown value={category} title="Category"  options={["tv","movie"]}  func={handleCategoryChange}></Dropdown>
-
-      </div>
-
-      <div className="list-disc w-full h-[50vh] overflow-x-hidden overflow-y-auto shadow-lg text-zinc-400  shadow-white mt-5 p-5">
-       
-       {person[category +"_credits"].cast.map((c,i)=>( <li title='Redirect to link' key={i} className='hover:text-white hover:bg-zinc-900 cursor-pointer duration-300 px-5 py-5 rounded-md '>
-          <Link  to={`/${category}/details/${c.id}`}>
-          <span> Movie Name : {c.name || c.title || c.original_name || c.original_title} </span>
-          <span className=' block ml-5'>Character Name: {c.character}</span>
-          </Link>
-         </li>))}
-       
-
-      </div>
-
-      </div>
-
-
-
-
-
-    </div>
-
-    </div>
-  ):<Loading></Loading>
+      <Outlet />
+    </div>
+  ) : <Loading />
 }
 
 export default Persondetails

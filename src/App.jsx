@@ -14,27 +14,11 @@ import Persondetails from './Components/Persondetails';
 import Trailer from './Components/partials/Trailer';
 import Notfound from './Components/Notfound';
 
-const MobileBlocker = () => {
-  return (
-    <div className="w-screen h-screen bg-black text-white flex flex-col justify-center items-center px-5 text-center">
-      <h1 className="text-3xl font-bold mb-4">Access Denied</h1>
-      <p className="text-lg text-gray-300">
-        This website is not accessible on mobile devices. <br /> Please use a desktop or laptop to continue.
-      </p>
-    </div>
-  );
-};
 
 const App = () => {
-  const [isMobile, setIsMobile] = useState(false);
 
-  useEffect(() => {
-    if (window.innerWidth <= 768) {
-      setIsMobile(true);
-    }
-  }, []);
 
-  if (isMobile) return <MobileBlocker />;
+  
 
   return (
     <div className="w-screen h-screen bg-[#1F1E24] flex text-white">

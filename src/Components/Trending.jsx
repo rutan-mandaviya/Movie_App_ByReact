@@ -65,19 +65,27 @@ const handleDurationChange = (e) => {
       id="scrollableDiv"
       className='w-screen min-h-screen bg-[#18171b] overflow-y-auto p-6 text-white'
     >
-      {/* Header */}
-      <div className='flex items-center justify-evenly mb-6'>
-        <h1 className='w-[20%]text-3xl font-bold text-zinc-100 flex items-center gap-4'>
-          <i
-            onClick={() => navigate(-1)}
-            className='ri-arrow-left-line text-2xl hover:text-[#6556cd] cursor-pointer'
-          ></i>
-          Trending
-        </h1>
-    <div className='w-[100vw]'>
-        <Topnav />
-      </div>
-        <div className='flex w-[30%] items-center gap-2'>
+      
+        <div className="w-full flex flex-col lg:flex-row items-start lg:items-center justify-between px-4 sm:px-6 py-4 gap-4 sm:gap-6">
+  <h1 className="text-2xl sm:text-3xl font-semibold text-zinc-300 flex items-center">
+    <i
+      onClick={() => navigate(-1)}
+      className="text-3xl sm:text-4xl mr-3 hover:text-[#6556cd] ri-arrow-left-line cursor-pointer"
+    ></i>
+    Trending
+    <small className="text-zinc-400 text-sm ml-2">({category})</small>
+  </h1>
+
+  <div className="w-full lg:w-[50%]">
+    <Topnav />
+  </div>
+</div>
+      
+
+      {/* Section Title */}
+      <div className="w-[90%] flex items-center justify-between bg-zinc-800 px-5 py-3 mx-auto  rounded-md mb-5 mt-2">
+    <h1 className='md:text-2xl text-[20px] w-[20%] font-semibold lg:w-[80%] '><i className="mr-4 ri-fire-fill"></i>Latest Releases</h1>
+<div className='flex w-[70%]  md:w-[50%] items-center gap-2'>
           <Dropdown
             value={category}
             title='Category'
@@ -91,16 +99,7 @@ const handleDurationChange = (e) => {
             func={handleDurationChange}
           />
         </div>
-      </div>
-
-      {/* Topnav */}
-      
-
-      {/* Section Title */}
-      <div className='w-[90%] mx-auto bg-zinc-800 px-5 py-3 text-2xl rounded-lg font-semibold text-white flex items-center gap-3 mb-6'>
-        <i className='ri-fire-fill text-[#ff5e5e]'></i>
-        Latest Releases
-      </div>
+</div>
 
       {/* Trending List */}
       <InfiniteScroll
