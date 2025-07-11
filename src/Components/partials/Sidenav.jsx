@@ -49,28 +49,29 @@ const Sidenav = () => {
       </div>
 
       {/* Mobile Bottom Navigation */}
-      <div className="md:hidden fixed bottom-0 left-0 w-full bg-zinc-900 border-t border-zinc-600 flex justify-around items-center text-white py-2 z-50">
-        <Link to="/trending" className={`flex flex-col items-center ${isActive("/trending")}`}>
-          <i className="ri-fire-fill text-xl"></i>
-          <span className="text-xs">Trending</span>
-        </Link>
-        <Link to="/popular" className={`flex flex-col items-center ${isActive("/popular")}`}>
-          <i className="ri-bard-fill text-xl"></i>
-          <span className="text-xs">Popular</span>
-        </Link>
-        <Link to="/movie" className={`flex flex-col items-center ${isActive("/movie")}`}>
-          <i className="ri-movie-fill text-xl"></i>
-          <span className="text-xs">Movies</span>
-        </Link>
-        <Link to="/tvshows" className={`flex flex-col items-center ${isActive("/tvshows")}`}>
-          <i className="ri-tv-fill text-xl"></i>
-          <span className="text-xs">TV</span>
-        </Link>
-        <Link to="/person" className={`flex flex-col items-center ${isActive("/person")}`}>
-          <i className="ri-group-fill text-xl"></i>
-          <span className="text-xs">People</span>
-        </Link>
-      </div>
+    <div className="md:hidden fixed bottom-0 left-0 w-full h-[10vh] bg-zinc-900 border-t border-zinc-600 flex justify-around items-center text-white py-2 z-50">
+  <Link to="/trending" className={`flex flex-col items-center ${isActive("/trending")}`}>
+    <i className="ri-fire-fill text-xl text-orange-500"></i>
+    <span className="text-xs text-orange-400">Trending</span>
+  </Link>
+  <Link to="/popular" className={`flex flex-col items-center ${isActive("/popular")}`}>
+    <i className="ri-bard-fill text-xl text-yellow-400"></i>
+    <span className="text-xs text-yellow-300">Popular</span>
+  </Link>
+  <Link to="/movie" className={`flex flex-col items-center ${isActive("/movie")}`}>
+    <i className="ri-movie-fill text-xl text-blue-500"></i>
+    <span className="text-xs text-blue-400">Movies</span>
+  </Link>
+  <Link to="/tvshows" className={`flex flex-col items-center ${isActive("/tvshows")}`}>
+    <i className="ri-tv-fill text-xl text-purple-400"></i>
+    <span className="text-xs text-purple-300">TV</span>
+  </Link>
+  <Link to="/person" className={`flex flex-col items-center ${isActive("/person")}`}>
+    <i className="ri-group-fill text-xl text-pink-500"></i>
+    <span className="text-xs text-pink-400">People</span>
+  </Link>
+</div>
+
     </>
   );
 };
