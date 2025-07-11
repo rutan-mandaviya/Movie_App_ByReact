@@ -15,7 +15,7 @@ const Cardverical = ({ data, title }) => {
             className="w-full h-[35vh] sm:h-[40vh] md:h-[50vh] object-cover rounded-lg shadow-[8px_17px_38px_2px_rgba(0,0,0,0.5)]"
             src={
               items.poster_path || items.backdrop_path || items.profile_path
-                ? `https://image.tmdb.org/t/p/w300/${items.poster_path || items.backdrop_path || items.profile_path}`
+                ? `https://image.tmdb.original/t/p/w300/${items.poster_path || items.backdrop_path || items.profile_path}`
                 : noimage
             }
             alt=""

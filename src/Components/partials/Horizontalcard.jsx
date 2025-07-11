@@ -15,7 +15,7 @@ const Horizontalcard = ({ data }) => {
           >
             <img
               className=" w-full h-[170px] rounded-t-lg object-cover"
-              src={ items.backdrop_path || items.profile_path || items.poster_path ? `https://image.tmdb.org/t/p/w300/${
+              src={ items.backdrop_path || items.profile_path || items.poster_path ? `https://image.tmdb.original/t/p/w300/${
                 items.backdrop_path || items.profile_path || items.poster_path
               }`:noimage}
               alt=""
