@@ -46,10 +46,10 @@ const Persondetails = () => {
           />
 
           <div className="flex gap-4 text-2xl mt-2">
-            <a target="_blank" title="Wikipedia" href={`https://www.wikidata.org/wiki/${person.externalid.wikidata_id}`}><i className="text-gray-400 ri-earth-fill"></i></a>
-            <a target="_blank" title="Facebook" href={`https://www.facebook.com/${person.externalid.facebook_id}`}><i className="text-blue-500 ri-facebook-circle-fill"></i></a>
-            <a target="_blank" title="Instagram" href={`https://www.instagram.com/${person.externalid.instagram_id}`}><i className="text-pink-500 ri-instagram-fill"></i></a>
-            <a target="_blank" title="Twitter/X" href={`https://www.twitter.com/${person.externalid.twitter_id}`}><i className="text-white ri-twitter-x-fill"></i></a>
+            <a className=' hover:scale-150' target="_blank" title="Wikipedia" href={`https://www.wikidata.org/wiki/${person.externalid.wikidata_id}`}><i className="text-gray-400   ri-earth-fill"></i></a>
+            <a className=' hover:scale-150' target="_blank" title="Facebook" href={`https://www.facebook.com/${person.externalid.facebook_id}`}><i className="text-blue-500 ri-facebook-circle-fill"></i></a>
+            <a className=' hover:scale-150' target="_blank" title="Instagram" href={`https://www.instagram.com/${person.externalid.instagram_id}`}><i className="text-pink-500 ri-instagram-fill"></i></a>
+            <a className=' hover:scale-150' target="_blank" title="Twitter/X" href={`https://www.twitter.com/${person.externalid.twitter_id}`}><i className="text-white ri-twitter-x-fill"></i></a>
           </div>
 
           <div className="text-sm mt-4 space-y-3">
@@ -94,7 +94,7 @@ const Persondetails = () => {
               <Link
                 key={i}
                 to={`/${category}/details/${c.id}`}
-                className="block hover:bg-[#252525] px-3 py-3 rounded-md transition"
+                className="block hover:bg-[#252525]   px-3 py-3 rounded-md transition"
               >
                 <div className="font-semibold text-white truncate">🎬 {c.name || c.title || c.original_name || c.original_title}</div>
                 <div className="ml-3 text-zinc-400 truncate">🧑‍🎤 as {c.character || "Unknown"}</div>

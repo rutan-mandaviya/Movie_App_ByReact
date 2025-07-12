@@ -8,11 +8,11 @@ const Cardverical = ({ data, title }) => {
       {data.map((items, index) => (
         <Link
           to={`/${items.mediatype || title}/details/${items.id}`}
-          className="w-[46%] sm:w-[30%] md:w-[23%] lg:w-[18%] xl:w-[18%] mb-6"
+          className="w-[46%] sm:w-[30%] md:w-[23%] lg:w-[18%] xl:w-[18%] mb-6 hover:scale-[1.05] transition-transform duration-300"
           key={index}
         >
           <img
-            className="w-full h-[35vh] sm:h-[40vh] md:h-[50vh] object-cover rounded-lg shadow-[8px_17px_38px_2px_rgba(0,0,0,0.5)]"
+            className="w-full h-[35vh]  sm:h-[40vh] md:h-[50vh] object-cover rounded-lg shadow-[8px_17px_38px_2px_rgba(0,0,0,0.5)]"
             src={
               items.poster_path || items.backdrop_path || items.profile_path
                 ? `https://image.tmdb.org/t/p/original/${items.poster_path || items.backdrop_path || items.profile_path}`
