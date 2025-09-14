@@ -11,10 +11,11 @@ const Loading = () => {
         className="w-40 h-40"
       />
 
-      <h1 className="mt-6 text-lg md:text-xl font-semibold text-gray-700 text-center px-4">
-        ⚠️ If you are facing loading issues, it’s not the website problem — this
-        is due to the main API issue.
-      </h1>
+     <h1 className="mt-6 text-lg md:text-xl font-semibold text-gray-700 text-center px-4">
+  📶 Connect your Wi-Fi/router to the internet for the website to work.
+  <br />
+  ⚠️ If you are still facing loading issues, it’s not the website problem — this is due to the main API issue.
+</h1>
     </div>
   );
 };
