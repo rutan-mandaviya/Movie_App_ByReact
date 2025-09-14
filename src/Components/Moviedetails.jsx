@@ -42,7 +42,7 @@ const Moviedetails = () => {
       <div className="flex flex-col lg:flex-row gap-8 items-start mb-6">
         <img
           className="w-full lg:w-auto max-w-[300px] h-auto object-cover shadow-lg rounded-md"
-          src={`https://image.tmdb.org/t/p/original${movie.detail.poster_path || movie.detail.backdrop_path}`}
+          src={`https://image.tmdb.org/t/p/w500/${movie.detail.poster_path || movie.detail.backdrop_path}`}
           alt="poster"
         />
 
@@ -86,7 +86,7 @@ const Moviedetails = () => {
                 key={i}
                 title={w.provider_name}
                 className="w-10 h-10 rounded object-contain"
-                src={`https://image.tmdb.org/t/p/original${w.logo_path}`}
+                src={`https://image.tmdb.org/t/p/w500/${w.logo_path}`}
                 alt={w.provider_name}
               />
             ))}
